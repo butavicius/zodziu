@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="lt" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/main.js" type="module"></script>
+    <title>Žódžiu</title>
+
+    <!-- TODO: Add line below in production -->
+    <!-- <link rel="stylesheet" href="css/style.css" /> -->
+
+    <!-- TODO: Remove script below in production -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="h-full p-4">
+    <div
+      id="container"
+      class="h-full flex flex-col items-center justify-between"
+    >
+      <header class="">
+        <h1
+          class="text-3xl font-semibold tracking-widest border-solid border-blue-300 border-b-2"
+        >
+          ŽÓ<span class="text-blue-300">DŽIU</span>
+        </h1>
+      </header>
+      <div id="board" class="grid grid-cols-5 gap-1"></div>
+      <div
+        id="keyboard-container"
+        class="flex w-full flex-col"
+        style="max-width: 450px"
+      >
+        <div class="flex shrink justify-center">
+          <key-button key="ą"></key-button>
+          <key-button key="č"></key-button>
+          <key-button key="ę"></key-button>
+          <key-button key="ė"></key-button>
+          <key-button key="į"></key-button>
+          <key-button key="š"></key-button>
+          <key-button key="ų"></key-button>
+          <key-button key="ū"></key-button>
+          <key-button key="ž"></key-button>
+        </div>
+        <div class="flex justify-center">
+          <div style="flex: 0.5"></div>
+          <key-button key="e">e</key-button>
+          <key-button key="r">r</key-button>
+          <key-button key="t">t</key-button>
+          <key-button key="y">y</key-button>
+          <key-button key="u">u</key-button>
+          <key-button key="i">i</key-button>
+          <key-button key="o">o</key-button>
+          <key-button key="p">p</key-button>
+          <div style="flex: 0.5"></div>
+        </div>
+        <div class="flex justify-center">
+          <key-button key="a">a</key-button>
+          <key-button key="s">s</key-button>
+          <key-button key="d">d</key-button>
+          <key-button key="f">f</key-button>
+          <key-button key="g">g</key-button>
+          <key-button key="h">h</key-button>
+          <key-button key="j">j</key-button>
+          <key-button key="k">k</key-button>
+          <key-button key="j">l</key-button>
+        </div>
+        <div class="flex justify-center">
+          <key-button key="enter" wide="true"
+            ><img src="assets/enter.svg" style="max-height: 80%"
+          /></key-button>
+          <key-button key="z">z</key-button>
+          <key-button key="c">c</key-button>
+          <key-button key="v">v</key-button>
+          <key-button key="b">b</key-button>
+          <key-button key="n">n</key-button>
+          <key-button key="m">m</key-button>
+          <key-button key="delete" wide="true"
+            ><img src="assets/delete.svg" style="max-height: 80%"
+          /></key-button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
