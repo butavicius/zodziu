@@ -5,7 +5,7 @@ export default class KeyButton extends HTMLElement {
     this.key = this.getAttribute("key");
 
     this.className =
-      "flex shrink items-center justify-center cursor-pointer h-14 m-0.5 p-2 bg-gray-300 rounded-sm shadow uppercase";
+      "flex shrink items-center justify-center cursor-pointer h-14 m-0.5 p-2 bg-gray-300 rounded-md shadow uppercase";
 
     this.style = "flex: 1;";
     if (this.isWide) {
