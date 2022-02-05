@@ -1,7 +1,7 @@
 import KeyButton from "./KeyButton.js";
-import Square from "./Square.js";
+import Board from "./Board.js";
 
-// Setup new game
+// // Setup new game
 const game = {
   guessedWords: [[]],
   currentSquareNumber: 1,
@@ -9,19 +9,23 @@ const game = {
   isGameOver: false,
 };
 
+let board;
+
 const allowedLetters =
   "ąčęėįšųūžertyuiopasdfghjklzcvbnmĄČĘĖĮŠŲŪŽERTYUIOPASDFGHJKLZCVBNM";
 
 window.addEventListener("DOMContentLoaded", () => {
-  const board = document.querySelector("#board");
+  const boardRoot = document.querySelector("#board");
   const miniKeys = document.querySelectorAll("key-button");
 
-  // Populate board with squares
-  for (let i = 0; i < 30; i++) {
-    const square = new Square();
-    square.id = `square-${i + 1}`;
-    board.appendChild(square);
-  }
+  board = new Board("namas", boardRoot);
+
+  // // Populate board with squares
+  // for (let i = 0; i < 30; i++) {
+  //   const square = new Square();
+  //   square.id = `square-${i + 1}`;
+  //   board.appendChild(square);
+  // }
 
   // Register event listeners for all mini keyboard keys
   for (let key of miniKeys) {
@@ -80,40 +84,35 @@ function evaluateNewWord() {
 }
 
 function handleLetter(letter) {
-  if (getCurrentWordArray().length === 5) {
-    console.warn("Current word full. Press enter to submit.");
+  if (board.wordIsFull()) {
+    console.log("Current word full. Press enter to submit.");
     return;
   }
 
-  getCurrentSquare().innerText = letter;
-  pushCurrentWordArray(letter);
-
-  advanceCurrentSquareNumber();
+  board.write(letter);
 }
 
 function handleDelete() {
-  if (getCurrentWordArray().length === 0) {
-    console.warn("Current word array empty. Can't delete.");
+  if (board.wordIsEmpty()) {
+    console.log("Can't delete. Current word empty.");
     return;
   }
 
-  retreatCurrentSquareNumber();
-  getCurrentSquare().innerText = "";
-  popCurrentWordArray();
+  board.delete();
 }
 
 function handleEnter() {
-  if (getCurrentWordArray().length !== 5) {
-    console.warn("Please enter full word and only then press enter.");
+  if (!board.wordIsFull()) {
+    console.log("Can't submit word. It't not 5 letters yet.");
     return;
   }
 
-  evaluateNewWord();
+  // evaluateNewWord();
+  board.submit();
 }
 
 function handleKey(key) {
-  console.log(key);
-  if (isGameOver()) {
+  if (board.gameIsOver()) {
     console.log("Game over man");
     alert("Šiandien žaidimas baigtas.");
     return;
