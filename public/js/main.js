@@ -1,8 +1,9 @@
 import Board from "./Board.js";
 import TouchPad from "./TouchPad.js";
-import Encoder from "./Encoder.js";
 import wordlist from "./wordlist.js";
-import Countdown from "./Countdown.js";
+import Countdown from "./MidnightCountdown.js";
+import { getCurrentWordIndex, codec } from "./utils.js";
+import MidnightCountdown from "./MidnightCountdown.js";
 
 let board;
 const lettersAllowed =
@@ -13,10 +14,14 @@ window.addEventListener("DOMContentLoaded", () => {
   const touchPadKeys = document.querySelectorAll("touch-pad");
   const countdownRoot = document.querySelector("#countdown");
 
-  // console.log("word is", Encoder.decode(wordlist[54]));
-  new Countdown(countdownRoot);
+  new MidnightCountdown(countdownRoot);
 
-  board = new Board("šątės", boardRoot, lettersAllowed, handleHideKey);
+  board = new Board(
+    codec.decode(wordlist[getCurrentWordIndex()]),
+    boardRoot,
+    lettersAllowed,
+    handleHideKey
+  );
 
   // Register event listeners for all mini keyboard keys
   for (let key of touchPadKeys) {
@@ -57,7 +62,6 @@ function handleEnter() {
 function handleKeyPress(key) {
   if (board.gameIsOver()) {
     console.log("Game over man");
-    alert("Šiandien žaidimas baigtas.");
     return;
   }
 

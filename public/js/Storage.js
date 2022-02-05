@@ -1,4 +1,4 @@
-import Encoder from "./Encoder.js";
+import { codec } from "./utils.js";
 
 class Storage {
   #gameHistory;
@@ -62,4 +62,4 @@ class Storage {
   }
 }
 
-export default new Storage(Encoder);
+export default new Storage(codec);
