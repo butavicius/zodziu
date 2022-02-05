@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
   const touchPadKeys = document.querySelectorAll("touch-pad");
 
-  board = new Board("šątėž", boardRoot, lettersAllowed);
+  board = new Board("šątės", boardRoot, lettersAllowed);
 
   // Register event listeners for all mini keyboard keys
   for (let key of touchPadKeys) {

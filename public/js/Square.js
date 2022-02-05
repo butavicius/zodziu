@@ -1,4 +1,8 @@
 export default class LetterSquare extends HTMLElement {
+  #normalBorder = "border-gray-200";
+  #activeBorder = "border-gray-600";
+  #normalText = "text-gray-600";
+
   constructor() {
     super();
 
@@ -9,47 +13,55 @@ export default class LetterSquare extends HTMLElement {
       "w-14",
       "h-14",
       "border-2",
-      "border-gray-200",
+      this.#normalBorder,
       "text-4xl",
+      this.#normalText,
       "font-medium",
-      "text-gray-900",
       "shadow-md",
-      "uppercase"
+      "uppercase",
+      "select-none",
+      "duration-200"
     );
 
-    this.style = "transition: all 0.35s ease";
+    // this.style = "transition: all 0.35s ease";
   }
 
   markGreen() {
-    this.classList.add("bg-lime-600");
+    this.classList.remove(this.#normalBorder);
     this.classList.add("border-lime-600");
+    this.classList.add("bg-lime-600");
     this.switchToWhite();
   }
   markYellow() {
-    console.log('marking yelow');
-    this.classList.add("bg-yellow-500");
+    this.classList.remove(this.#normalBorder);
     this.classList.add("border-yellow-500");
+    this.classList.add("bg-yellow-500");
     this.switchToWhite();
   }
   markGray() {
-    console.log('marking red');
+    this.classList.remove(this.#normalBorder);
     this.classList.add("bg-gray-400");
     this.classList.add("border-gray-400");
     this.switchToWhite();
   }
+
   switchToWhite() {
+    this.classList.remove(this.#normalText);
     this.classList.add("text-white");
   }
 
   insertLetter(letter) {
-    this.classList.add("border-gray-600");
+    this.classList.remove(this.#normalBorder);
+    this.classList.add(this.#activeBorder);
+    this.classList.remove("transition-none");
     this.innerHTML = letter;
-    this.style = "transition: all 0.35s ease";
   }
+
   deleteLetter() {
-    this.style = "transition: none";
+    this.classList.remove(this.#activeBorder);
+    this.classList.add(this.#normalBorder);
+    this.classList.add("transition-none");
     this.innerHTML = "";
-    this.classList.remove("border-gray-600");
   }
 }
 customElements.define("letter-square", LetterSquare);
