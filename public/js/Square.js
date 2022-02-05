@@ -13,6 +13,7 @@ export default class LetterSquare extends HTMLElement {
       "text-4xl",
       "font-medium",
       "text-gray-900",
+      "shadow-md",
       "uppercase"
     );
 
@@ -25,11 +26,13 @@ export default class LetterSquare extends HTMLElement {
     this.switchToWhite();
   }
   markYellow() {
+    console.log('marking yelow');
     this.classList.add("bg-yellow-500");
     this.classList.add("border-yellow-500");
     this.switchToWhite();
   }
-  markRed() {
+  markGray() {
+    console.log('marking red');
     this.classList.add("bg-gray-400");
     this.classList.add("border-gray-400");
     this.switchToWhite();
@@ -41,6 +44,7 @@ export default class LetterSquare extends HTMLElement {
   insertLetter(letter) {
     this.classList.add("border-gray-600");
     this.innerHTML = letter;
+    this.style = "transition: all 0.35s ease";
   }
   deleteLetter() {
     this.style = "transition: none";

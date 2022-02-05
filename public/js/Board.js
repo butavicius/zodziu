@@ -1,4 +1,5 @@
 import Square from "./Square.js";
+import Storage from "./Storage.js";
 
 export default class Board {
   #boardState = [[]];
@@ -11,7 +12,7 @@ export default class Board {
     this.#targetWord = targetWord;
     this.#lettersAllowed = lettersAllowed;
 
-    // Generate square DOM elements
+    // Generate Square elements
     for (let row = 0; row < 6; row++) {
       for (let col = 0; col < 5; col++) {
         const square = new Square();
@@ -20,14 +21,26 @@ export default class Board {
       }
     }
 
-    // Append square elements to root DOM element
+    // Append Square elements to root
     this.#squares.flat().forEach((square) => rootElement.appendChild(square));
+
+    // If we have saved game, load it. Otherwise load empty state
+    const savedGame = Storage.loadGame(targetWord);
+    if (savedGame) this.#loadState(savedGame);
   }
 
   submit() {
-    if (!this.wordIsFull()) {
-      throw new Error("Can't submit word. It's not 5 letters yet");
+    if (this.gameIsOver()) {
+      console.error("Board can't sumit word because game is over.");
+      return;
     }
+    if (!this.wordIsFull()) {
+      console.error("Board can't submit word. It's not 5 letters long.");
+      return;
+    }
+
+    // Save game state
+    Storage.saveGame(this.#getTargetWord(), this.#getBoardState());
 
     // Color squares
     this.#changeSquareColors(
@@ -50,8 +63,14 @@ export default class Board {
   }
 
   write(letter) {
+    if (this.gameIsOver()) {
+      console.error("Board can't write letter because game is over.");
+      return;
+    }
     if (this.wordIsFull()) {
-      console.error("OOPS! Can't write letter to board. Word is full.");
+      console.error(
+        "Board can't write, because current word already has 5 letters."
+      );
       return;
     }
     if (!this.#letterIsLegal(letter)) {
@@ -66,8 +85,15 @@ export default class Board {
   }
 
   delete() {
+    if (this.gameIsOver()) {
+      console.error("Board can't delete letter because game is over.");
+      return;
+    }
+
     if (this.wordIsEmpty()) {
-      console.error("Can't write letter to board. Word is empty.");
+      console.error(
+        "Board can't delete letter because current word has 0 letters."
+      );
       return;
     }
 
@@ -87,37 +113,39 @@ export default class Board {
     return this.#getCurrentWordArray().length === 0;
   }
 
-  loadState(state) {
+  // PRIVATE METHODS
+
+  #loadState(state) {
     if (!this.#stateLooksValid(state)) {
-      console.error("OOPS!: Can't load state. State object is invalid");
+      console.error("Board can't load state. State object is invalid");
+      console.log(state);
       return;
     }
 
     // Fill in letters
-    state.boardState.forEach((wordArray, row) => {
+    state.forEach((wordArray, row) => {
       wordArray.forEach((letter, column) => {
         this.#getSquare(row, column).insertLetter(letter);
       });
     });
 
     // Color squares
-    state.boardState.forEach((wordArray, row) => {
-      this.#changeSquareColors(state.targetWord, wordArray, row);
+    state.forEach((wordArray, row) => {
+      this.#changeSquareColors(this.#getTargetWord(), wordArray, row);
     });
 
-    this.#boardState = state.boardState;
-    this.#gameIsOver = state.gameIsOver;
-    this.#targetWord = state.targetWord;
+    // Load state
+    this.#boardState = state;
 
     this.submit();
   }
-
-  // PRIVATE METHODS
 
   #changeSquareColors(targetWord, guessedWord, row) {
     // Make sure we deal with copies and not messing up objects arguments refer to
     const targetWordArray = [...targetWord];
     const guessedWordArray = [...guessedWord];
+
+    console.log("our target word array is", targetWordArray);
 
     // Time delay after each square reveal.
     const coloringSpeed = 200;
@@ -141,9 +169,10 @@ export default class Board {
 
       if (!targetWordArray.includes(letter)) {
         setTimeout(
-          () => this.#getSquare(row, column).markRed(),
+          () => this.#getSquare(row, column).markGray(),
           column * coloringSpeed
         );
+        return;
       }
 
       // Letter is in wrong place. Remove it from target so we later don't mark
@@ -155,6 +184,14 @@ export default class Board {
         column * coloringSpeed
       );
     });
+  }
+
+  #getCurrentWordArray() {
+    return this.#boardState[this.#getNumberOfGuessedWords()];
+  }
+
+  #getNumberOfGuessedWords() {
+    return this.#boardState.length - 1;
   }
 
   #getCurrentWord() {
@@ -177,10 +214,6 @@ export default class Board {
     return this.#squares[this.#getCurrentRow()][this.#getCurrentColumn()];
   }
 
-  #getCurrentWordArray() {
-    return this.#boardState[this.#getNumberOfGuessedWords()];
-  }
-
   #getCurrentRow() {
     return this.#getNumberOfGuessedWords();
   }
@@ -189,8 +222,8 @@ export default class Board {
     return this.#getCurrentWordArray().length;
   }
 
-  #getNumberOfGuessedWords() {
-    return this.#boardState.length - 1;
+  #getBoardState() {
+    return this.#boardState;
   }
 
   #letterIsLegal(letter) {
@@ -202,13 +235,11 @@ export default class Board {
   }
 
   #stateLooksValid(state) {
-    if (!Array.isArray(state.boardState)) return false;
-    if (!Array.isArray(state.boardState[0])) return false;
-    if (state.boardState.length > 6) return false;
-    if (typeof state.gameIsOver !== "boolean") return false;
-    if (state.targetWord.length !== 5) return false;
-    if (state.boardState.some((element) => element.length !== 5)) return false;
-    if (state.boardState.flat().some((letter) => !this.#letterIsLegal(letter)))
+    if (!Array.isArray(state)) return false;
+    if (!Array.isArray(state[0])) return false;
+    if (state.length > 6) return false;
+    if (state.some((element) => element.length !== 5)) return false;
+    if (state.flat().some((letter) => !this.#letterIsLegal(letter)))
       return false;
 
     return true;
