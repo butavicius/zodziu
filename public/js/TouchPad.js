@@ -21,8 +21,6 @@ export default class TouchPad extends HTMLElement {
       "uppercase",
       "select-none"
     );
-    // this.className =
-    //   "flex items-center justify-center cursor-pointer h-14 m-0.5 p-2 bg-slate-300 active:bg-slate-400 text-gray-700 rounded-md shadow uppercase";
 
     this.style = "flex: 1;";
     if (this.isWide) {
@@ -30,10 +28,19 @@ export default class TouchPad extends HTMLElement {
       this.style = "flex: 1.8";
     }
     if (this.isSpacer) {
-      this.style = "flex: 0; visibility: hidden";
+      this.classList.add("invisible");
+      this.style = "flex: 0;";
     }
 
     this.innerHTML = this.innerHTML || this.key;
+  }
+
+  hide() {
+    if (!this.isSpacer) {
+      this.classList.add("transition-opacity");
+      this.classList.add("duration-1000");
+      this.classList.add("opacity-0");
+    }
   }
 }
 

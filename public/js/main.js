@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
   const touchPadKeys = document.querySelectorAll("touch-pad");
 
-  board = new Board("šątės", boardRoot, lettersAllowed);
+  board = new Board("šątės", boardRoot, lettersAllowed, handleHideKey);
 
   // Register event listeners for all mini keyboard keys
   for (let key of touchPadKeys) {
@@ -65,4 +65,9 @@ function handleKeyPress(key) {
   }
 
   if (lettersAllowed.includes(key)) handleLetter(key);
+}
+
+function handleHideKey(key) {
+  const keyElement = document.querySelector(`touch-pad[key=${key}]`);
+  keyElement.hide();
 }

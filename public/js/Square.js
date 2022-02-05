@@ -22,8 +22,6 @@ export default class LetterSquare extends HTMLElement {
       "select-none",
       "duration-200"
     );
-
-    // this.style = "transition: all 0.35s ease";
   }
 
   markGreen() {

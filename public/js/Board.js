@@ -7,10 +7,12 @@ export default class Board {
   #targetWord;
   #gameIsOver = false;
   #lettersAllowed;
+  #hideKeyCallback;
 
-  constructor(targetWord, rootElement, lettersAllowed) {
+  constructor(targetWord, rootElement, lettersAllowed, hideKeyCallback) {
     this.#targetWord = targetWord;
     this.#lettersAllowed = lettersAllowed;
+    this.#hideKeyCallback = hideKeyCallback;
 
     // Generate Square elements
     for (let row = 0; row < 6; row++) {
@@ -172,6 +174,9 @@ export default class Board {
           () => this.#getSquare(row, column).markGray(),
           column * coloringSpeed
         );
+
+        // Call back to tell that this letter will no longer be needed
+        this.#hideKeyCallback(letter);
         return;
       }
 
