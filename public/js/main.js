@@ -5,7 +5,7 @@ import Square from "./Square.js";
 const game = {
   guessedWords: [[]],
   currentSquareNumber: 1,
-  target: "gijos",
+  target: "grąža",
   isGameOver: false,
 };
 
@@ -35,6 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
 function handleGameEnd() {
   const isWinner = getTargetWord() === getCurrentWord();
   console.log("game ended. You won?", isWinner);
+  alert(isWinner ? "Sveikinu, tu laimėjai!" : "Oopsie! Pralaimėjai.");
   setGameOver(true);
 }
 
@@ -114,6 +115,7 @@ function handleKey(key) {
   console.log(key);
   if (isGameOver()) {
     console.log("Game over man");
+    alert("Šiandien žaidimas baigtas.");
     return;
   }
 
