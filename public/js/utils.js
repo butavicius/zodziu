@@ -6,7 +6,7 @@ export const codec = {
    */
   encode: (str) => btoa(encodeURIComponent(str)),
 
-  /**
+  /*
    * Decode string
    * @param {string} str
    * @returns {string}
