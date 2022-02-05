@@ -61,7 +61,7 @@ export default class Board {
       return;
     }
 
-    this.#getCurrentSquare().innerHTML = letter;
+    this.#getCurrentSquare().insertLetter(letter);
     this.#getCurrentWordArray().push(letter);
   }
 
@@ -72,7 +72,7 @@ export default class Board {
     }
 
     this.#getCurrentWordArray().pop();
-    this.#getCurrentSquare().innerHTML = "";
+    this.#getCurrentSquare().deleteLetter();
   }
 
   gameIsOver() {
@@ -96,7 +96,7 @@ export default class Board {
     // Fill in letters
     state.boardState.forEach((wordArray, row) => {
       wordArray.forEach((letter, column) => {
-        this.#getSquare(row, column).innerHTML = letter;
+        this.#getSquare(row, column).insertLetter(letter);
       });
     });
 
@@ -119,13 +119,19 @@ export default class Board {
     const targetWordArray = [...targetWord];
     const guessedWordArray = [...guessedWord];
 
+    // Time delay after each square reveal.
+    const coloringSpeed = 200;
+
     // First deal with letters we guessed right
     guessedWordArray.forEach((letter, column) => {
       if (targetWordArray[column] === letter) {
         guessedWordArray[column] = null;
         targetWordArray[column] = null;
 
-        this.#getSquare(row, column).markGreen();
+        setTimeout(
+          () => this.#getSquare(row, column).markGreen(),
+          column * coloringSpeed
+        );
       }
     });
 
@@ -134,13 +140,20 @@ export default class Board {
       if (letter === null) return;
 
       if (!targetWordArray.includes(letter)) {
-        this.#getSquare(row, column).markRed();
+        setTimeout(
+          () => this.#getSquare(row, column).markRed(),
+          column * coloringSpeed
+        );
       }
 
       // Letter is in wrong place. Remove it from target so we later don't mark
       // same letter yellow in case only one in target is present
       targetWordArray[targetWordArray.indexOf(letter)] = null;
-      this.#getSquare(row, column).markYellow();
+
+      setTimeout(
+        () => this.#getSquare(row, column).markYellow(),
+        column * coloringSpeed
+      );
     });
   }
 

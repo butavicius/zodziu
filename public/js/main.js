@@ -5,9 +5,6 @@ import Board from "./Board.js";
 const mockState = {
   boardState: [
     ["a", "r", "s", "a", "s"],
-    ["b", "a", "l", "k", "s"],
-    ["b", "a", "l", "k", "s"],
-    ["b", "a", "l", "k", "s"],
     ["b", "a", "l", "k", "a"],
   ],
   gameIsOver: false,

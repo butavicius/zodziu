@@ -6,7 +6,7 @@ export default class TouchPad extends HTMLElement {
     this.key = this.getAttribute("key");
 
     this.className =
-      "flex items-center justify-center cursor-pointer h-14 m-0.5 p-2 bg-slate-300 active:bg-slate-400 text-gray-800 rounded-md shadow uppercase";
+      "flex items-center justify-center cursor-pointer h-14 m-0.5 p-2 bg-slate-300 active:bg-slate-400 text-gray-700 rounded-md shadow uppercase";
 
     this.style = "flex: 1;";
     if (this.isWide) {
