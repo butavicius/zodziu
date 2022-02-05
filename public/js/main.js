@@ -2,6 +2,7 @@ import Board from "./Board.js";
 import TouchPad from "./TouchPad.js";
 import Encoder from "./Encoder.js";
 import wordlist from "./wordlist.js";
+import Countdown from "./Countdown.js";
 
 let board;
 const lettersAllowed =
@@ -10,8 +11,10 @@ const lettersAllowed =
 window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
   const touchPadKeys = document.querySelectorAll("touch-pad");
+  const countdownRoot = document.querySelector("#countdown");
 
-  console.log("word is", Encoder.decode(wordlist[54]));
+  // console.log("word is", Encoder.decode(wordlist[54]));
+  new Countdown(countdownRoot);
 
   board = new Board("šątės", boardRoot, lettersAllowed, handleHideKey);
 

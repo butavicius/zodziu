@@ -120,7 +120,6 @@ export default class Board {
   #loadState(state) {
     if (!this.#stateLooksValid(state)) {
       console.error("Board can't load state. State object is invalid");
-      console.log(state);
       return;
     }
 
@@ -146,8 +145,6 @@ export default class Board {
     // Make sure we deal with copies and not messing up objects arguments refer to
     const targetWordArray = [...targetWord];
     const guessedWordArray = [...guessedWord];
-
-    console.log("our target word array is", targetWordArray);
 
     // Time delay after each square reveal.
     const coloringSpeed = 200;
