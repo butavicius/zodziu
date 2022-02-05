@@ -1,4 +1,4 @@
-import KeyButton from "./KeyButton.js";
+import TouchPad from "./TouchPad.js";
 import Board from "./Board.js";
 
 // TRY SETUP
@@ -21,13 +21,13 @@ const lettersAllowed =
 
 window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
-  const miniKeys = document.querySelectorAll("key-button");
+  const touchPadKeys = document.querySelectorAll("touch-pad");
 
   board = new Board("namas", boardRoot, lettersAllowed);
   board.loadState(mockState);
 
   // Register event listeners for all mini keyboard keys
-  for (let key of miniKeys) {
+  for (let key of touchPadKeys) {
     key.addEventListener("click", (e) => handleKey(e.target.key));
   }
 

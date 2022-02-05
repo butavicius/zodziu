@@ -108,6 +108,8 @@ export default class Board {
     this.#boardState = state.boardState;
     this.#gameIsOver = state.gameIsOver;
     this.#targetWord = state.targetWord;
+
+    this.submit();
   }
 
   // PRIVATE METHODS
