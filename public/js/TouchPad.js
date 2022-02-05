@@ -36,11 +36,9 @@ export default class TouchPad extends HTMLElement {
   }
 
   hide() {
-    if (!this.isSpacer) {
-      this.classList.add("transition-opacity");
-      this.classList.add("duration-1000");
-      this.classList.add("opacity-0");
-    }
+    this.classList.add("transition-opacity");
+    this.classList.add("duration-1000");
+    this.classList.add("opacity-0");
   }
 }
 

@@ -26,20 +26,23 @@ export default class LetterSquare extends HTMLElement {
 
   markGreen() {
     this.classList.remove(this.#normalBorder);
+    this.classList.remove(this.#activeBorder);
     this.classList.add("border-lime-600");
     this.classList.add("bg-lime-600");
     this.switchToWhite();
   }
   markYellow() {
     this.classList.remove(this.#normalBorder);
+    this.classList.remove(this.#activeBorder);
     this.classList.add("border-yellow-500");
     this.classList.add("bg-yellow-500");
     this.switchToWhite();
   }
   markGray() {
     this.classList.remove(this.#normalBorder);
-    this.classList.add("bg-gray-400");
+    this.classList.remove(this.#activeBorder);
     this.classList.add("border-gray-400");
+    this.classList.add("bg-gray-400");
     this.switchToWhite();
   }
 
