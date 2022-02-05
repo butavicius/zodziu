@@ -29,17 +29,17 @@ export default class Board {
       throw new Error("Can't submit word. It's not 5 letters yet");
     }
 
-    // If this is our last word, finish game
-    if (this.#getNumberOfGuessedWords() === 5) {
-      this.#endGame();
-    }
-
     // Color squares
     this.#changeSquareColors(
       this.#getTargetWord(),
       this.#getCurrentWord(),
       this.#getCurrentRow()
     );
+
+    // If this is our last word, finish game
+    if (this.#getNumberOfGuessedWords() === 5) {
+      this.#endGame();
+    }
 
     // If we guessed all the letters, finish game
     if (this.#getTargetWord() === this.#getCurrentWord()) {
@@ -84,7 +84,23 @@ export default class Board {
     return this.#getCurrentWordArray().length === 0;
   }
 
-  loadState(state) {}
+  loadState(state) {
+    this.#boardState = state.boardState;
+    this.#gameIsOver = state.gameIsOver;
+    this.#targetWord = state.targetWord;
+
+    // Fill in letters in squares
+    state.boardState.forEach((wordArray, row) => {
+      wordArray.forEach((letter, column) => {
+        this.#getSquare(row, column).innerHTML = letter;
+      });
+    });
+
+    // Color squares
+    state.boardState.forEach((wordArray, row) => {
+      this.#changeSquareColors(state.targetWord, wordArray, row);
+    });
+  }
 
   // PRIVATE METHODS
 
@@ -95,6 +111,7 @@ export default class Board {
 
     // First deal with letters we guessed right
     guessedWordArray.forEach((letter, column) => {
+      console.log("column is", column);
       if (targetWordArray[column] === letter) {
         guessedWordArray[column] = null;
         targetWordArray[column] = null;

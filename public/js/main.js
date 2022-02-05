@@ -1,12 +1,14 @@
 import KeyButton from "./KeyButton.js";
 import Board from "./Board.js";
 
-// // Setup new game
-const game = {
-  guessedWords: [[]],
-  currentSquareNumber: 1,
-  target: "grąža",
-  isGameOver: false,
+// TRY SETUP
+const mockState = {
+  boardState: [
+    ["a", "r", "s", "a", "s"],
+    ["b", "a", "l"],
+  ],
+  gameIsOver: false,
+  targetWord: "kalva",
 };
 
 let board;
@@ -19,13 +21,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const miniKeys = document.querySelectorAll("key-button");
 
   board = new Board("namas", boardRoot);
-
-  // // Populate board with squares
-  // for (let i = 0; i < 30; i++) {
-  //   const square = new Square();
-  //   square.id = `square-${i + 1}`;
-  //   board.appendChild(square);
-  // }
+  board.loadState(mockState);
 
   // Register event listeners for all mini keyboard keys
   for (let key of miniKeys) {
