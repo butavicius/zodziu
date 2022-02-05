@@ -5,11 +5,11 @@ export default class Board {
   #squares = [[], [], [], [], [], []];
   #targetWord;
   #gameIsOver = false;
-  #lettersAllowed =
-    "ąčęėįšųūžertyuiopasdfghjklzcvbnmĄČĘĖĮŠŲŪŽERTYUIOPASDFGHJKLZCVBNM";
+  #lettersAllowed;
 
-  constructor(targetWord, rootElement) {
+  constructor(targetWord, rootElement, lettersAllowed) {
     this.#targetWord = targetWord;
+    this.#lettersAllowed = lettersAllowed;
 
     // Generate square DOM elements
     for (let row = 0; row < 6; row++) {
@@ -51,12 +51,14 @@ export default class Board {
 
   write(letter) {
     if (this.wordIsFull()) {
-      throw new Error("Can't write letter to board. Word is full.");
+      console.error("OOPS! Can't write letter to board. Word is full.");
+      return;
     }
     if (!this.#letterIsLegal(letter)) {
-      throw new Error(
-        `Can't write letter to board. Letter is illegal: ${letter}`
+      console.error(
+        `OOPS !Can't write letter to board. Letter is illegal: ${letter}`
       );
+      return;
     }
 
     this.#getCurrentSquare().innerHTML = letter;
@@ -65,7 +67,8 @@ export default class Board {
 
   delete() {
     if (this.wordIsEmpty()) {
-      throw new Error("Can't write letter to board. Word is empty.");
+      console.error("Can't write letter to board. Word is empty.");
+      return;
     }
 
     this.#getCurrentWordArray().pop();
@@ -85,11 +88,12 @@ export default class Board {
   }
 
   loadState(state) {
-    this.#boardState = state.boardState;
-    this.#gameIsOver = state.gameIsOver;
-    this.#targetWord = state.targetWord;
+    if (!this.#stateLooksValid(state)) {
+      console.error("OOPS!: Can't load state. State object is invalid");
+      return;
+    }
 
-    // Fill in letters in squares
+    // Fill in letters
     state.boardState.forEach((wordArray, row) => {
       wordArray.forEach((letter, column) => {
         this.#getSquare(row, column).innerHTML = letter;
@@ -100,6 +104,10 @@ export default class Board {
     state.boardState.forEach((wordArray, row) => {
       this.#changeSquareColors(state.targetWord, wordArray, row);
     });
+
+    this.#boardState = state.boardState;
+    this.#gameIsOver = state.gameIsOver;
+    this.#targetWord = state.targetWord;
   }
 
   // PRIVATE METHODS
@@ -111,7 +119,6 @@ export default class Board {
 
     // First deal with letters we guessed right
     guessedWordArray.forEach((letter, column) => {
-      console.log("column is", column);
       if (targetWordArray[column] === letter) {
         guessedWordArray[column] = null;
         targetWordArray[column] = null;
@@ -177,5 +184,18 @@ export default class Board {
 
   #endGame() {
     this.#gameIsOver = true;
+  }
+
+  #stateLooksValid(state) {
+    if (!Array.isArray(state.boardState)) return false;
+    if (!Array.isArray(state.boardState[0])) return false;
+    if (state.boardState.length > 6) return false;
+    if (typeof state.gameIsOver !== "boolean") return false;
+    if (state.targetWord.length !== 5) return false;
+    if (state.boardState.some((element) => element.length !== 5)) return false;
+    if (state.boardState.flat().some((letter) => !this.#letterIsLegal(letter)))
+      return false;
+
+    return true;
   }
 }

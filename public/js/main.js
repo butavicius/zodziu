@@ -5,7 +5,10 @@ import Board from "./Board.js";
 const mockState = {
   boardState: [
     ["a", "r", "s", "a", "s"],
-    ["b", "a", "l"],
+    ["b", "a", "l", "k", "s"],
+    ["b", "a", "l", "k", "s"],
+    ["b", "a", "l", "k", "s"],
+    ["b", "a", "l", "k", "a"],
   ],
   gameIsOver: false,
   targetWord: "kalva",
@@ -13,14 +16,14 @@ const mockState = {
 
 let board;
 
-const allowedLetters =
+const lettersAllowed =
   "ąčęėįšųūžertyuiopasdfghjklzcvbnmĄČĘĖĮŠŲŪŽERTYUIOPASDFGHJKLZCVBNM";
 
 window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
   const miniKeys = document.querySelectorAll("key-button");
 
-  board = new Board("namas", boardRoot);
+  board = new Board("namas", boardRoot, lettersAllowed);
   board.loadState(mockState);
 
   // Register event listeners for all mini keyboard keys
@@ -124,7 +127,7 @@ function handleKey(key) {
     return;
   }
 
-  if (allowedLetters.includes(key)) handleLetter(key);
+  if (lettersAllowed.includes(key)) handleLetter(key);
 }
 
 // Board functions
