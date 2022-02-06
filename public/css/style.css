@@ -2,11 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
 /* COLOR THEME */
 :root {
-  --logoDark: brown;
   --logoBright: blue;
+  --logoDark: brown;
   --logoUnderline: gold;
 
   --borderNormal: silver;
@@ -23,7 +22,7 @@
   --touchpadLetters: black;
 }
 
-/* Color utility classes */
+/* Custom utility classes */
 
 .color-logoDark {
   color: var(--logoDark);
@@ -63,4 +62,8 @@
 }
 .color-touchpadLetters {
   color: var(--touchpadLetters);
+}
+
+.custom-flex-1\.8 {
+    flex: 1.8;
 }

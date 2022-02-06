@@ -7,6 +7,7 @@ export default class TouchPad extends HTMLElement {
 
     this.classList.add(
       "flex",
+      "flex-1",
       "items-center",
       "justify-center",
       "cursor-pointer",
@@ -22,14 +23,15 @@ export default class TouchPad extends HTMLElement {
       "select-none"
     );
 
-    this.style = "flex: 1;";
     if (this.isWide) {
       this.className += " text-xs";
-      this.style = "flex: 1.8";
+      this.classList.remove("flex-1");
+      this.classList.add("custom-flex-1.8");
     }
     if (this.isSpacer) {
       this.classList.add("invisible");
-      this.style = "flex: 0;";
+      this.classList.remove("flex-1");
+      this.classList.add("flex-none");
     }
 
     this.innerHTML = this.innerHTML || this.key;

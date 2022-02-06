@@ -24,7 +24,7 @@ export default class LetterSquare extends HTMLElement {
       "shadow-md",
       "uppercase",
       "select-none",
-      "duration-200"
+      "duration-300"
     );
   }
 
