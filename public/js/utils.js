@@ -22,6 +22,3 @@ export const getCurrentWordIndex = () => {
   return Math.floor(distance / (1000 * 60 * 60 * 24));
 };
 
-export const generateSocialStatus = (boardState, gameNumber) => {
-  console.log(boardState, gameNumber);
-};
