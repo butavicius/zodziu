@@ -43,9 +43,9 @@ export default class MidnightCountdown {
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    this.#hElement.innerText = hours;
-    this.#mElement.innerText = minutes;
-    this.#sElement.innerText = seconds;
+    this.#hElement.innerText = hours.toString().padStart(2, "0");
+    this.#mElement.innerText = minutes.toString().padStart(2, "0");
+    this.#sElement.innerText = seconds.toString().padStart(2, "0");
   }
 
   #getDistanceToNextGame() {

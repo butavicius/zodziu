@@ -15,7 +15,7 @@ export const codec = {
 };
 
 // word index equals days passed since start
-export const getCurrentWordIndex = () => {
+export const getTodaysGameNumber = () => {
   const gameStart = new Date(2022, 1, 5, 0, 0, 0, 0);
   const distance = new Date().getTime() - gameStart.getTime();
 

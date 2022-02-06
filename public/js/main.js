@@ -1,19 +1,18 @@
 import Board from "./Board.js";
 import TouchPad from "./TouchPad.js";
+import InfoCard from "./InfoCard.js";
+
+import { getTodaysGameNumber, codec } from "./utils.js";
 import wordlist from "./wordlist.js";
-import Countdown from "./MidnightCountdown.js";
-import { getCurrentWordIndex, codec } from "./utils.js";
-// import MidnightCountdown from "./MidnightCountdown.js";
-import Storage from "./Storage.js";
 
 let board;
 const lettersAllowed = "ąčęėįšųūžertyuiopasdfghjklzcvbnm";
-const targetWord = codec.decode(wordlist[getCurrentWordIndex()]);
+const gameNumber = getTodaysGameNumber();
+const targetWord = codec.decode(wordlist[gameNumber]);
 
 window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
   const touchPadKeys = document.querySelectorAll("touch-pad");
-  board = new Board(targetWord, boardRoot, lettersAllowed, handleHideKey);
 
   // Register event listeners for all touch-pad keys
   for (let key of touchPadKeys) {
@@ -22,6 +21,18 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Register physical keyboard listener
   window.addEventListener("keydown", (e) => handleKeyPress(e.key));
+
+  window.addEventListener("sayHi", () => {
+    console.log("hello");
+  });
+
+  document.addEventListener("gameEnd", (e) => {
+    handleGameEnd(e.detail.targetWord, e.detail.boardState);
+  });
+
+  // window.addEventListener("hideKey", handleHideKey);
+
+  board = new Board(targetWord, boardRoot, lettersAllowed, handleHideKey);
 });
 
 function handleLetter(letter) {
@@ -72,4 +83,13 @@ function handleHideKey(key) {
     `touch-pad[key=${key.toLowerCase()}]`
   );
   keyElement.hide();
+}
+
+function handleGameEnd(targetWord, boardState) {
+  document.querySelector("#overlay").classList.remove("hidden");
+  document.querySelector("#info-card").classList.remove("hidden");
+  document.querySelector("#info-card").classList.add("flex");
+
+  // Create infocard
+  new InfoCard(boardState, targetWord, gameNumber);
 }

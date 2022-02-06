@@ -4,24 +4,26 @@
 
 /* COLOR THEME */
 :root {
-  --logoBright: blue;
-  --logoDark: brown;
-  --logoUnderline: gold;
+  --logoBright: #5b7b59;
+  --logoDark: #d6a427;
+  --logoUnderline: #e4bc59;
 
   --borderNormal: silver;
   --borderActive: black;
 
-  --textNormal: black;
-  --textBright: white;
+  --textNormal: #5c5957;
+  --textBright: #fbfbfb;
 
-  --squareGreen: green;
-  --squareYellow: yellow;
-  --squareGray: gray;
+  --squareGreen: #85b282;
+  --squareYellow: #e4bc59;
+  --squareGray: #a7a4a2;
 
-  --touchpadKeys: silver;
+  --touchpadKeys: #dddee2;
   --touchpadLetters: black;
 
   --textInfoBlock: #555;
+
+  --socialBorder: #e4bc59;
 }
 
 /* Custom utility classes */
@@ -66,7 +68,10 @@
   color: var(--touchpadLetters);
 }
 .color-textInfoBlock {
-    color: var(--textInfoBlock);
+  color: var(--textInfoBlock);
+}
+.color-socialBorder {
+  border-color: var(--socialBorder);
 }
 
 .custom-flex-1\.8 {

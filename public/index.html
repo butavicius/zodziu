@@ -20,10 +20,11 @@
       >
         <span class="color-logoBright">ŽÓ</span
         ><span class="color-logoDark">DŽIU</span>
-      </h0>
+      </h2>
     </header>
     <main
-      class="flex flex-col items-center w-full justify-around" style="height: 100%"
+      class="flex flex-col items-center w-full justify-around"
+      style="height: 100%"
     >
       <!-- Game board -->
       <div id="board" class="grid grid-cols-5 gap-1 my-2"></div>
@@ -89,31 +90,73 @@
         </div>
       </div>
 
-      <!-- Infoblock -->
+      <!-- Info card -->
       <div
-        class="absolute top-40 w-11/12 flex flex-col justify-center items-center p-4 border-gray-200 border-2 rounded-md shadow-md bg-white z-20"
-        style="max-width: 450px"
+        class="absolute items-center justify-center w-screen h-screen top-0 left-0 hidden"
+        id="info-card"
       >
-        <h2
-          id="infotitle"
-          class="mb-8 text-2xl font-bold tracking-tight dark:text-white"
+        <div
+          class="flex flex-1 shrink-1 flex-col justify-center items-center m-4 py-4 border-gray-200 border-2 rounded-md shadow-md bg-white z-20"
+          style="max-width: 450px"
         >
-          ŽÓDŽIU #2 laimėjai!
-        </h2>
-        <p>Iki kito žaidimo liko:</p>
-        <div class="flex py-2">
-          <div id="hElement" class="text-3xl">22</div>
-          <div class="text-3xl">:</div>
-          <div id="mElement" class="text-3xl">22</div>
-          <div class="text-3xl">:</div>
-          <div id="sElement" class="text-3xl">54</div>
+          <!-- Title -->
+          <h2
+            id="info-card-title"
+            class="py-8 text-xl font-semibold tracking-widest dark:text-white"
+          >
+            <span class="color-logoUnderline border-b-2"
+              ><span class="color-logoBright">ŽÓ</span
+              ><span class="color-logoDark">DŽIU</span></span
+            >
+            <span
+              id="endgame-status"
+              class="tracking-normal font-normal"
+            ></span>
+          </h2>
+
+          <!-- Target word image -->
+          <div id="target-word" class="flex mt-5 mb-1"></div>
+
+          <!-- Social status -->
+          <div
+            class="flex my-14 p-6 w-3/4 justify-center items-center color-socialBorder border-y-2"
+          >
+            <div class="flex-1 flex justify-center items-center">
+              <div
+                id="social-status"
+                class="shadow-lg shadow-gray-300 select-none cursor-pointer leading-5 border border-gray-400 rounded-md"
+              ></div>
+            </div>
+
+            <div class="flex-1 flex flex-col justify-center items-start">
+              <p id="share-text">Dalinkis rezultatu</p>
+              <img
+                src="assets/arrow.svg"
+                width="40"
+                height="40"
+                class="select-none"
+              />
+            </div>
+          </div>
+
+          <!-- Countdown timer -->
+          <div class="flex flex-col items-center mt-2 mb-8 select-none">
+            <p class="uppercase text-sm tracking-wider">Kitas žodis už</p>
+            <div class="flex py-2">
+              <div id="hoursLeft" class="text-3xl">22</div>
+              <div class="text-3xl">:</div>
+              <div id="minutesLeft" class="text-3xl">22</div>
+              <div class="text-3xl">:</div>
+              <div id="secondsLeft" class="text-3xl">54</div>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- Opacity overlay  -->
     </main>
+    <!-- Opacity overlay  -->
     <div
       id="overlay"
-      class="w-screen h-screen z-10 opacity-80 bg-white fixed top-0 left-0"
+      class="w-screen h-screen z-10 opacity-80 bg-white fixed top-0 left-0 hidden"
     ></div>
   </body>
 </html>

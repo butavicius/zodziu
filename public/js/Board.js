@@ -8,11 +8,13 @@ export default class Board {
   #gameIsOver = false;
   #lettersAllowed;
   #hideKeyCallback;
+  #rootElement;
 
   constructor(targetWord, rootElement, lettersAllowed, hideKeyCallback) {
     this.#targetWord = targetWord;
     this.#lettersAllowed = lettersAllowed;
     this.#hideKeyCallback = hideKeyCallback;
+    this.#rootElement = rootElement;
 
     // Generate Square elements
     for (let row = 0; row < 6; row++) {
@@ -32,7 +34,7 @@ export default class Board {
   }
 
   submit() {
-    if (this.gameIsOver()) {
+    if (this.#gameIsOver) {
       console.error("Board can't sumit word because game is over.");
       return;
     }
@@ -61,11 +63,24 @@ export default class Board {
       this.#endGame();
     }
 
-    if (!this.gameIsOver()) this.#startNewWord();
+    if (this.#gameIsOver) {
+      this.#rootElement.dispatchEvent(
+        new CustomEvent("gameEnd", {
+          bubbles: true,
+          detail: {
+            targetWord: this.#targetWord,
+            boardState: this.#boardState,
+          },
+        })
+      );
+      return;
+    }
+
+    this.#startNewWord();
   }
 
   write(letter) {
-    if (this.gameIsOver()) {
+    if (this.#gameIsOver) {
       throw new Error("Board can't write letter because game is over.");
     }
     if (this.wordIsFull()) {
@@ -84,7 +99,7 @@ export default class Board {
   }
 
   delete() {
-    if (this.gameIsOver()) {
+    if (this.#gameIsOver) {
       throw new Error("Board can't delete letter because game is over.");
     }
 
@@ -98,16 +113,16 @@ export default class Board {
     this.#getCurrentSquare().deleteLetter();
   }
 
-  gameIsOver() {
-    return this.#gameIsOver;
-  }
-
   wordIsFull() {
     return this.#getCurrentWordArray().length === 5;
   }
 
   wordIsEmpty() {
     return this.#getCurrentWordArray().length === 0;
+  }
+
+  gameIsOver() {
+    return this.#gameIsOver;
   }
 
   // PRIVATE METHODS

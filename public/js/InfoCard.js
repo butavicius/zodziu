@@ -1,24 +1,77 @@
-import MidnightCountdown from "./MidnightCountdown";
+import MidnightCountdown from "./MidnightCountdown.js";
 
-class InfoCard {
-  boardState;
-  targetWord;
-  gameNumber;
+export default class InfoCard {
+  #boardState;
+  #targetWord;
+  #gameNumber;
+  #cardElement;
 
   constructor(boardState, targetWord, gameNumber) {
     this.#boardState = boardState;
     this.#targetWord = targetWord;
     this.#gameNumber = gameNumber;
+    this.#cardElement = document.querySelector("#info-card");
+
+    // TITLE
+    this.#cardElement.querySelector("#endgame-status").innerHTML =
+      this.#generateTitle();
+
+    // SOCIAL STATUS
+    this.#cardElement.querySelector("#social-status").innerText =
+      this.#generateSocialIcons();
+
+    this.#cardElement
+      .querySelector("#social-status")
+      .addEventListener("click", () => {
+        navigator.clipboard.writeText(this.#generateSocialClipboard());
+        this.#cardElement.querySelector("#share-text").innerText =
+          "Nukopijuota!";
+        
+        setTimeout(()=> {
+    this.#cardElement.querySelector("#share-text").innerText = "Dalinkis rezultatu"
+        }, 10000)
+      });
+
+    // COUNTDOWN TIMER
+    new MidnightCountdown(
+      this.#cardElement.querySelector("#hoursLeft"),
+      this.#cardElement.querySelector("#minutesLeft"),
+      this.#cardElement.querySelector("#secondsLeft"),
+      () => {
+        location.reload();
+      }
+    );
+
+    // TARGET WORD IMAGE
+    this.#cardElement.querySelector("#target-word").innerHTML =
+      this.#generateTargetWordImage();
   }
 
-  #generateSocialStatus(boardState, targetWord, gameNumber) {
-    let result = `ŽÓDŽIU No.${gameNumber}\n`;
+  #generateTitle() {
+    return `№${this.#gameNumber} ${this.#isWinner() ? "pavarei!" : "nepaėjo."}`;
+  }
 
-    for (let row = 0; row < boardState.length; row++) {
-      result += getSquareColors(targetWord, boardState[row]);
+  #isWinner() {
+    return (
+      this.#boardState[this.#boardState.length - 1].join("") ===
+      this.#targetWord
+    );
+  }
+
+  #generateSocialIcons() {
+    let result = "";
+
+    for (let row = 0; row < this.#boardState.length; row++) {
+      result += this.#getSquareColors(this.#targetWord, this.#boardState[row]);
       result += "\n";
     }
 
+    return result;
+  }
+
+  #generateSocialClipboard() {
+    let result = `ŽÓDŽIU №${this.#gameNumber}\n\n`;
+    result += this.#generateSocialIcons();
     return result;
   }
 
@@ -61,5 +114,13 @@ class InfoCard {
     });
 
     return rowIcons.join("");
+  }
+
+  #generateTargetWordImage() {
+    let result = "";
+    for (let letter of this.#targetWord) {
+      result += `<div class="flex items-center shadow-md shadow-gray-300 justify-center h-8 w-8 mx-0.5 color-squareGreen color-textBright uppercase">${letter}</div>`;
+    }
+    return result;
   }
 }
