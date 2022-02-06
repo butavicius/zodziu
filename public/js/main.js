@@ -2,13 +2,13 @@ import Board from "./Board.js";
 import TouchPad from "./TouchPad.js";
 import wordlist from "./wordlist.js";
 import Countdown from "./MidnightCountdown.js";
-import { getCurrentWordIndex, codec } from "./utils.js";
+import { getCurrentWordIndex, codec, generateSocialStatus } from "./utils.js";
 // import MidnightCountdown from "./MidnightCountdown.js";
 import Storage from "./Storage.js";
 
 let board;
-const lettersAllowed =
-  "ąčęėįšųūžertyuiopasdfghjklzcvbnm";
+const lettersAllowed = "ąčęėįšųūžertyuiopasdfghjklzcvbnm";
+const targetWord = codec.decode(wordlist[getCurrentWordIndex()]);
 
 window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
@@ -16,13 +16,9 @@ window.addEventListener("DOMContentLoaded", () => {
   // const countdownRoot = document.querySelector("#countdown");
 
   // new MidnightCountdown(countdownRoot);
+  generateSocialStatus(Storage.loadGame(targetWord), targetWord);
 
-  board = new Board(
-    codec.decode(wordlist[getCurrentWordIndex()]),
-    boardRoot,
-    lettersAllowed,
-    handleHideKey
-  );
+  board = new Board(targetWord, boardRoot, lettersAllowed, handleHideKey);
 
   // Register event listeners for all touch-pad keys
   for (let key of touchPadKeys) {
