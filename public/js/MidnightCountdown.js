@@ -28,7 +28,6 @@ export default class MidnightCountdown {
     this.#callback = callback;
 
     this.#tick();
-
     this.#intervalID = setInterval(() => this.#tick(), 1000);
   }
 

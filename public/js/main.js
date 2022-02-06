@@ -4,15 +4,16 @@ import wordlist from "./wordlist.js";
 import Countdown from "./MidnightCountdown.js";
 import { getCurrentWordIndex, codec } from "./utils.js";
 // import MidnightCountdown from "./MidnightCountdown.js";
+import Storage from "./Storage.js";
 
 let board;
 const lettersAllowed =
-  "ąčęėįšųūžertyuiopasdfghjklzcvbnmĄČĘĖĮŠŲŪŽERTYUIOPASDFGHJKLZCVBNM";
+  "ąčęėįšųūžertyuiopasdfghjklzcvbnm";
 
 window.addEventListener("DOMContentLoaded", () => {
   const boardRoot = document.querySelector("#board");
   const touchPadKeys = document.querySelectorAll("touch-pad");
-  const countdownRoot = document.querySelector("#countdown");
+  // const countdownRoot = document.querySelector("#countdown");
 
   // new MidnightCountdown(countdownRoot);
 
@@ -33,30 +34,27 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 function handleLetter(letter) {
-  if (board.wordIsFull()) {
-    console.log("Current word full. Press enter to submit.");
-    return;
+  try {
+    board.write(letter);
+  } catch (error) {
+    console.error(error);
   }
-
-  board.write(letter);
 }
 
 function handleDelete() {
-  if (board.wordIsEmpty()) {
-    console.log("Can't delete. Current word empty.");
-    return;
+  try {
+    board.delete();
+  } catch (error) {
+    console.error(error);
   }
-
-  board.delete();
 }
 
 function handleEnter() {
-  if (!board.wordIsFull()) {
-    console.log("Can't submit word. It't not 5 letters yet.");
-    return;
+  try {
+    board.submit();
+  } catch (error) {
+    console.error(error);
   }
-
-  board.submit();
 }
 
 function handleKeyPress(key) {
@@ -75,10 +73,12 @@ function handleKeyPress(key) {
     return;
   }
 
-  if (lettersAllowed.includes(key)) handleLetter(key);
+  if (lettersAllowed.includes(key)) handleLetter(key.toLowerCase());
 }
 
 function handleHideKey(key) {
-  const keyElement = document.querySelector(`touch-pad[key=${key}]`);
+  const keyElement = document.querySelector(
+    `touch-pad[key=${key.toLowerCase()}]`
+  );
   keyElement.hide();
 }

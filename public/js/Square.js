@@ -53,8 +53,6 @@ export default class LetterSquare extends HTMLElement {
     this.classList.add(this.#squareGray);
   }
 
-  switchToWhite() {}
-
   insertLetter(letter) {
     this.classList.remove(this.#borderNormal);
     this.classList.add(this.#borderActive);

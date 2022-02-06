@@ -66,20 +66,17 @@ export default class Board {
 
   write(letter) {
     if (this.gameIsOver()) {
-      console.error("Board can't write letter because game is over.");
-      return;
+      throw new Error("Board can't write letter because game is over.");
     }
     if (this.wordIsFull()) {
-      console.error(
+      throw new Error(
         "Board can't write, because current word already has 5 letters."
       );
-      return;
     }
     if (!this.#letterIsLegal(letter)) {
-      console.error(
+      throw new Error(
         `OOPS !Can't write letter to board. Letter is illegal: ${letter}`
       );
-      return;
     }
 
     this.#getCurrentSquare().insertLetter(letter);
@@ -88,15 +85,13 @@ export default class Board {
 
   delete() {
     if (this.gameIsOver()) {
-      console.error("Board can't delete letter because game is over.");
-      return;
+      throw new Error("Board can't delete letter because game is over.");
     }
 
     if (this.wordIsEmpty()) {
-      console.error(
+      throw new Error(
         "Board can't delete letter because current word has 0 letters."
       );
-      return;
     }
 
     this.#getCurrentWordArray().pop();
@@ -166,15 +161,18 @@ export default class Board {
     guessedWordArray.forEach((letter, column) => {
       if (letter === null) return;
 
+      // Letter is wrong
       if (!targetWordArray.includes(letter)) {
         setTimeout(
           () => this.#getSquare(row, column).markGray(),
           column * coloringSpeed
         );
 
-        // Call back to tell that this letter will no longer be needed
+        // Even if letter is marked gray, it may still exist in same word as green.
+        if (this.#getTargetWord().includes(letter)) return;
+
+        // Otherwise it won't be needed no more. We can hide it from touchpad.
         this.#hideKeyCallback(letter);
-        return;
       }
 
       // Letter is in wrong place. Remove it from target so we later don't mark
