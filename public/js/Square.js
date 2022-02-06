@@ -1,7 +1,11 @@
 export default class LetterSquare extends HTMLElement {
-  #normalBorder = "border-gray-200";
-  #activeBorder = "border-gray-600";
-  #normalText = "text-gray-600";
+  #borderNormal = "color-borderNormal";
+  #borderActive = "color-borderActive";
+  #textNormal = "color-textNormal";
+  #textBright = "color-textBright";
+  #squareGreen = "color-squareGreen";
+  #squareYellow = "color-squareYellow";
+  #squareGray = "color-squareGray";
 
   constructor() {
     super();
@@ -13,9 +17,9 @@ export default class LetterSquare extends HTMLElement {
       "w-14",
       "h-14",
       "border-2",
-      this.#normalBorder,
       "text-4xl",
-      this.#normalText,
+      this.#borderNormal,
+      this.#textNormal,
       "font-medium",
       "shadow-md",
       "uppercase",
@@ -25,42 +29,42 @@ export default class LetterSquare extends HTMLElement {
   }
 
   markGreen() {
-    this.classList.remove(this.#normalBorder);
-    this.classList.remove(this.#activeBorder);
-    this.classList.add("border-lime-600");
-    this.classList.add("bg-lime-600");
-    this.switchToWhite();
+    this.classList.remove(this.#textNormal);
+    this.classList.add(this.#textBright);
+
+    this.classList.remove(this.#borderNormal);
+    this.classList.remove(this.#borderActive);
+    this.classList.add(this.#squareGreen);
   }
   markYellow() {
-    this.classList.remove(this.#normalBorder);
-    this.classList.remove(this.#activeBorder);
-    this.classList.add("border-yellow-500");
-    this.classList.add("bg-yellow-500");
-    this.switchToWhite();
+    this.classList.remove(this.#textNormal);
+    this.classList.add(this.#textBright);
+
+    this.classList.remove(this.#borderNormal);
+    this.classList.remove(this.#borderActive);
+    this.classList.add(this.#squareYellow);
   }
   markGray() {
-    this.classList.remove(this.#normalBorder);
-    this.classList.remove(this.#activeBorder);
-    this.classList.add("border-gray-400");
-    this.classList.add("bg-gray-400");
-    this.switchToWhite();
+    this.classList.remove(this.#textNormal);
+    this.classList.add(this.#textBright);
+
+    this.classList.remove(this.#borderNormal);
+    this.classList.remove(this.#borderActive);
+    this.classList.add(this.#squareGray);
   }
 
-  switchToWhite() {
-    this.classList.remove(this.#normalText);
-    this.classList.add("text-white");
-  }
+  switchToWhite() {}
 
   insertLetter(letter) {
-    this.classList.remove(this.#normalBorder);
-    this.classList.add(this.#activeBorder);
+    this.classList.remove(this.#borderNormal);
+    this.classList.add(this.#borderActive);
     this.classList.remove("transition-none");
     this.innerHTML = letter;
   }
 
   deleteLetter() {
-    this.classList.remove(this.#activeBorder);
-    this.classList.add(this.#normalBorder);
+    this.classList.remove(this.#borderActive);
+    this.classList.add(this.#borderNormal);
     this.classList.add("transition-none");
     this.innerHTML = "";
   }

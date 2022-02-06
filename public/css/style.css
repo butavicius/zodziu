@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* COLOR THEME */
+:root {
+  --logoDark: brown;
+  --logoBright: blue;
+  --logoUnderline: gold;
+
+  --borderNormal: silver;
+  --borderActive: black;
+
+  --textNormal: black;
+  --textBright: white;
+
+  --squareGreen: green;
+  --squareYellow: yellow;
+  --squareGray: gray;
+
+  --touchpadKeys: silver;
+  --touchpadLetters: black;
+}
+
+/* Color utility classes */
+
+.color-logoDark {
+  color: var(--logoDark);
+}
+.color-logoBright {
+  color: var(--logoBright);
+}
+.color-logoUnderline {
+  border-color: var(--logoUnderline);
+}
+.color-borderNormal {
+  border-color: var(--borderNormal);
+}
+.color-borderActive {
+  border-color: var(--borderActive);
+}
+.color-textNormal {
+  color: var(--textNormal);
+}
+.color-textBright {
+  color: var(--textBright);
+}
+.color-squareGreen {
+  background-color: var(--squareGreen);
+  border-color: var(--squareGreen);
+}
+.color-squareYellow {
+  background-color: var(--squareYellow);
+  border-color: var(--squareYellow);
+}
+.color-squareGray {
+  background-color: var(--squareGray);
+  border-color: var(--squareGray);
+}
+.color-touchpadKeys {
+  background-color: var(--touchpadKeys);
+}
+.color-touchpadLetters {
+  color: var(--touchpadLetters);
+}

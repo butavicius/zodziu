@@ -3,7 +3,7 @@ import TouchPad from "./TouchPad.js";
 import wordlist from "./wordlist.js";
 import Countdown from "./MidnightCountdown.js";
 import { getCurrentWordIndex, codec } from "./utils.js";
-import MidnightCountdown from "./MidnightCountdown.js";
+// import MidnightCountdown from "./MidnightCountdown.js";
 
 let board;
 const lettersAllowed =
@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const touchPadKeys = document.querySelectorAll("touch-pad");
   const countdownRoot = document.querySelector("#countdown");
 
-  new MidnightCountdown(countdownRoot);
+  // new MidnightCountdown(countdownRoot);
 
   board = new Board(
     codec.decode(wordlist[getCurrentWordIndex()]),
@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
     handleHideKey
   );
 
-  // Register event listeners for all mini keyboard keys
+  // Register event listeners for all touch-pad keys
   for (let key of touchPadKeys) {
     key.addEventListener("click", (e) => handleKeyPress(e.target.key));
   }
