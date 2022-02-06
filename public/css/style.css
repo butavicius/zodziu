@@ -20,6 +20,8 @@
 
   --touchpadKeys: silver;
   --touchpadLetters: black;
+
+  --textInfoBlock: #555;
 }
 
 /* Custom utility classes */
@@ -63,7 +65,10 @@
 .color-touchpadLetters {
   color: var(--touchpadLetters);
 }
+.color-textInfoBlock {
+    color: var(--textInfoBlock);
+}
 
 .custom-flex-1\.8 {
-    flex: 1.8;
+  flex: 1.8;
 }
