@@ -66,7 +66,7 @@ export default class InfoCard {
       result += "\n";
     }
 
-    return result;
+    return result.trim();
   }
 
   #generateSocialClipboard() {

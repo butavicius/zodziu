@@ -61,18 +61,6 @@ export default class Board {
     // If we guessed all the letters, finish game
     if (this.#getTargetWord() === this.#getCurrentWord()) {
       this.#endGame();
-    }
-
-    if (this.#gameIsOver) {
-      this.#rootElement.dispatchEvent(
-        new CustomEvent("gameEnd", {
-          bubbles: true,
-          detail: {
-            targetWord: this.#targetWord,
-            boardState: this.#boardState,
-          },
-        })
-      );
       return;
     }
 
@@ -247,6 +235,18 @@ export default class Board {
 
   #endGame() {
     this.#gameIsOver = true;
+
+    setTimeout(() => {
+      this.#rootElement.dispatchEvent(
+        new CustomEvent("gameEnd", {
+          bubbles: true,
+          detail: {
+            targetWord: this.#targetWord,
+            boardState: this.#boardState,
+          },
+        })
+      );
+    }, 1200);
   }
 
   #stateLooksValid(state) {

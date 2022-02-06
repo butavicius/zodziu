@@ -21,6 +21,12 @@ export default class MidnightCountdown {
     this.#nextMidnightDate.setDate(this.#nextMidnightDate.getDate() + 1);
     this.#nextMidnightDate.setHours(0, 0, 0, 0);
 
+    // Debugging only:
+    // this.#nextMidnightDate = new Date();
+    // this.#nextMidnightDate.setSeconds(this.#nextMidnightDate.getSeconds() + 10);
+
+    //-------------=
+
     this.#hElement = hElement;
     this.#mElement = mElement;
     this.#sElement = sElement;
