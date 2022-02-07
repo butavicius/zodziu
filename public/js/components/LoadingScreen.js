@@ -8,8 +8,9 @@ export default class LoadingScreen extends HTMLElement {
       "left-0",
       "w-screen",
       "h-screen",
-      "z-50",
-      "bg-red-400"
+      "opacity-1",
+      "bg-white",
+      "z-50"
     );
 
     window.addEventListener("load", () => this.#hide());

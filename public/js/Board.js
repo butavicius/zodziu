@@ -116,7 +116,7 @@ export default class Board {
     // Fill in letters
     state.forEach((wordArray, row) => {
       wordArray.forEach((letter, column) => {
-        this.#squares[(row, column)].innerText = letter;
+        this.#squares[row][column].innerText = letter;
       });
     });
 

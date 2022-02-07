@@ -1,6 +1,6 @@
 import MidnightCountdown from "./MidnightCountdown.js";
 
-export default class InfoCard {
+export default class GameInfo {
   #boardState;
   #targetWord;
   #gameNumber;
@@ -10,7 +10,7 @@ export default class InfoCard {
     this.#boardState = boardState;
     this.#targetWord = targetWord;
     this.#gameNumber = gameNumber;
-    this.#cardElement = document.querySelector("#info-card-container");
+    this.#cardElement = document.querySelector("#game-info");
 
     // TITLE
     this.#cardElement.querySelector("#endgame-status").innerHTML =

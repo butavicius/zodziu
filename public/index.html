@@ -28,7 +28,6 @@
 
       <!-- TOUCH PAD -->
 
-      <svg-icon src="assets/arrow.svg" height="50" width="50"></svg-icon>
       <div
         id="keyboard-container"
         class="flex w-full flex-col"
@@ -88,131 +87,68 @@
         </div>
       </div>
 
-      <!-- INFO CARD -->
+      <!-- GAME INFO CARD -->
 
-      <div
-        class="select-none absolute flex items-center justify-center w-screen h-screen top-0 left-0 invisible"
-        id="info-card-container"
-      >
-        <div
-          class="-translate-y-64 duration-500 flex flex-1 flex-col justify-center items-center m-4 py-4 border-gray-200 border-2 rounded-md shadow-md bg-white z-20 opacity-0"
-          style="max-width: 450px"
-          id="info-card"
+      <info-card id="game-info">
+        <!-- Title -->
+        <h2
+          id="info-card-title"
+          class="py-8 text-xl font-semibold tracking-widest"
         >
-          <!-- Title -->
-          <h2
-            id="info-card-title"
-            class="py-8 text-xl font-semibold tracking-widest"
+          <span class="color-logoUnderline border-b-2"
+            ><span class="color-logoBright">ŽÓ</span
+            ><span class="color-logoDark">DŽIU</span></span
           >
-            <span class="color-logoUnderline border-b-2"
-              ><span class="color-logoBright">ŽÓ</span
-              ><span class="color-logoDark">DŽIU</span></span
-            >
-            <span
-              id="endgame-status"
-              class="tracking-normal font-normal"
-            ></span>
-          </h2>
+          <span id="endgame-status" class="tracking-normal font-normal"></span>
+        </h2>
 
-          <!-- Target word image -->
-          <div id="target-word" class="flex mt-5 mb-1"></div>
+        <!-- Target word image -->
+        <div id="target-word" class="flex mt-5 mb-1"></div>
 
-          <!-- Social status -->
-          <div
-            class="flex my-14 py-6 w-3/4 justify-center items-center color-socialBorder border-y-2"
-          >
-            <div class="flex-1 flex justify-center items-center">
-              <div
-                id="social-status"
-                class="shadow-lg shadow-gray-300 select-none cursor-pointer leading-5 border border-gray-400 rounded-md"
-                style="flex-shrink: 0"
-              ></div>
-            </div>
-
-            <div class="flex-1 flex flex-col justify-center items-start pl-4">
-              <p id="share-text">Dalinkis rezultatu</p>
-              <p class="py-1"></p>
-              <img
-                src="assets/arrow.svg"
-                width="40"
-                height="40"
-                class="select-none"
-              />
-            </div>
+        <!-- Social status -->
+        <div
+          class="flex my-14 py-6 w-3/4 justify-center items-center color-socialBorder border-y-2"
+        >
+          <div class="flex-1 flex justify-center items-center">
+            <div
+              id="social-status"
+              class="shadow-lg shadow-gray-300 select-none cursor-pointer leading-5 border border-gray-400 rounded-md"
+              style="flex-shrink: 0"
+            ></div>
           </div>
 
-          <!-- Countdown timer -->
-          <div class="flex flex-col items-center mt-2 mb-8 select-none">
-            <p class="uppercase text-sm tracking-wider">Kitas žodis už</p>
-            <div class="flex py-2 font-bold">
-              <div id="hoursLeft" class="text-3xl">22</div>
-              <div class="text-3xl">:</div>
-              <div id="minutesLeft" class="text-3xl">22</div>
-              <div class="text-3xl">:</div>
-              <div id="secondsLeft" class="text-3xl">54</div>
-            </div>
+          <div class="flex-1 flex flex-col justify-center items-start pl-4">
+            <p id="share-text">Dalinkis rezultatu</p>
+            <p class="py-1"></p>
+            <img
+              src="assets/arrow.svg"
+              width="40"
+              height="40"
+              class="select-none"
+            />
           </div>
         </div>
-      </div>
 
-      <!-- ABOUT PAGE -->
-      <div
-        class="absolute flex items-center justify-center w-screen h-screen top-0 left-0 invisible"
-        id="about-page-container"
-      >
-        <div
-          class="select-none -translate-y-96 duration-500 flex flex-1 flex-col justify-center items-start m-4 p-8 border-gray-200 border-2 rounded-md shadow-md bg-white z-20 opacity-1"
-          style="max-width: 450px"
-          id="about-page"
-        >
-          <div class="flex w-full justify-between items-center mb-4">
-            <h2
-              id="info-card-title"
-              class="py-4 text-2xl font-semibold tracking-widest"
-            >
-              Kaip žaisti?
-            </h2>
-            <div id="question-close-button" class="cursor-pointer select-none">
-              <img src="assets/cross.svg" style="width: 2rem; height: 2rem" />
-            </div>
+        <!-- Countdown timer -->
+        <div class="flex flex-col items-center mt-2 mb-8 select-none">
+          <p class="uppercase text-sm tracking-wider">Kitas žodis už</p>
+          <div class="flex py-2 font-bold">
+            <div id="hoursLeft" class="text-3xl">22</div>
+            <div class="text-3xl">:</div>
+            <div id="minutesLeft" class="text-3xl">22</div>
+            <div class="text-3xl">:</div>
+            <div id="secondsLeft" class="text-3xl">54</div>
           </div>
-          <p class="text-justify">
-            Atspėk žodį! Turi šešis bandymus. Įvesk savo variantą ir spausk
-            Enter. Langelių spalvos parodys ar spėjimas buvo taiklus.
-          </p>
-          <h3 class="pt-8 mb-4 text-md uppercase font-semibold">PAVYZDŽIUI</h3>
-          <div class="flex mt-3">
-            <letter-square small="true">S</letter-square>
-            <letter-square color="green" small="true">A</letter-square>
-            <letter-square small="true">L</letter-square>
-            <letter-square small="true">D</letter-square>
-            <letter-square small="true">U</letter-square>
-          </div>
-          <p class="my-4">Atspėjai raidę ir jos vietą žodyje.</p>
-          <div class="flex mt-3">
-            <letter-square small="true">T</letter-square>
-            <letter-square small="true">O</letter-square>
-            <letter-square small="true">L</letter-square>
-            <letter-square small="true">Y</letter-square>
-            <letter-square color="yellow" small="true">N</letter-square>
-          </div>
-          <p class="my-4">Raidė yra žodyje, tačiau kitoje vietoje.</p>
-          <div class="flex mt-3">
-            <letter-square small="true">K</letter-square>
-            <letter-square small="true">I</letter-square>
-            <letter-square color="gray" small="true">R</letter-square>
-            <letter-square small="true">A</letter-square>
-            <letter-square small="true">S</letter-square>
-          </div>
-          <p class="my-4">Šios raidės žodyje nėra.</p>
         </div>
-      </div>
+      </info-card>
+
+      <!-- GAME  RULES-->
+      <info-card id="game-rules">
+       <card-rules></card-rules>
+      </info-card>
     </main>
 
     <!-- OPACITY OVERLAY  -->
-    <div
-      id="overlay"
-      class="duration-500 w-screen h-screen z-10 opacity-80 bg-white fixed top-0 left-0 invisible"
-    ></div>
+    <opacity-overlay></opacity-overlay>
   </body>
 </html>

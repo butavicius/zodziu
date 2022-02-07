@@ -7,25 +7,17 @@ export default class MidnightCountdown {
   #intervalID;
 
   /**
-   * Ppopulate and every second update DOM elements with hour, minute and
+   * Populate and every second update DOM elements with hour, minute and
    * seconds left till midnight and invoke callback when time is up.
-   * @constructor
-   * @param {} hElement
-   * @param {*} mElement
-   * @param {*} sElement
-   * @param {*} callback
-   *
    */
   constructor(hElement, mElement, sElement, callback) {
     this.#nextMidnightDate = new Date();
     this.#nextMidnightDate.setDate(this.#nextMidnightDate.getDate() + 1);
     this.#nextMidnightDate.setHours(0, 0, 0, 0);
 
-    // Debugging only:
+    // DEBUG :
     // this.#nextMidnightDate = new Date();
     // this.#nextMidnightDate.setSeconds(this.#nextMidnightDate.getSeconds() + 10);
-
-    //-------------=
 
     this.#hElement = hElement;
     this.#mElement = mElement;
