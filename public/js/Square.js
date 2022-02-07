@@ -14,12 +14,13 @@ export default class LetterSquare extends HTMLElement {
       "flex",
       "items-center",
       "justify-center",
-      "w-12",
-      "h-12",
-      "sm:w-14",
-      "sm:h-14",
       "border-2",
-      "text-4xl",
+      "h-12",
+      "w-12",
+      "sm:h-14",
+      "sm:w-14",
+      "text-2xl",
+      "sm:text-4xl",
       this.#borderNormal,
       this.#textNormal,
       "font-medium",
@@ -28,6 +29,20 @@ export default class LetterSquare extends HTMLElement {
       "select-none",
       "duration-300"
     );
+
+    if (this.getAttribute("color") === "green") {
+      this.markGreen();
+    }
+    if (this.getAttribute("color") === "yellow") {
+      this.markYellow();
+    }
+    if (this.getAttribute("color") === "gray") {
+      this.markGray();
+    }
+    if (this.getAttribute("small") === "true") {
+      this.classList.remove("h-12", "w-12", "sm:h-14", "sm:w-14");
+      this.classList.add("h-10", "w-10", "sm:h-12", "sm:w-12", "mr-1");
+    }
   }
 
   markGreen() {

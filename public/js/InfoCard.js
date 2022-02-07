@@ -10,7 +10,7 @@ export default class InfoCard {
     this.#boardState = boardState;
     this.#targetWord = targetWord;
     this.#gameNumber = gameNumber;
-    this.#cardElement = document.querySelector("#info-card");
+    this.#cardElement = document.querySelector("#info-card-container");
 
     // TITLE
     this.#cardElement.querySelector("#endgame-status").innerHTML =

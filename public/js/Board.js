@@ -246,7 +246,7 @@ export default class Board {
           },
         })
       );
-    }, 1200);
+    }, 1400);
   }
 
   #stateLooksValid(state) {

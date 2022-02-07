@@ -77,3 +77,34 @@
 .custom-flex-1\.8 {
   flex: 1.8;
 }
+
+.custom-boardSize {
+  width: 256px;
+  height: 308px;
+}
+@media (min-width: 640px) {
+  .custom-boardSize {
+    width: 296px;
+    height: 356px;
+  }
+}
+
+.custom-headerSize {
+  width: 256px;
+}
+@media (min-width: 640px) {
+  .custom-headerSize {
+    width: 296px;
+  }
+}
+
+.custom-questionButtonSize {
+  height: 2rem;
+  width: 2rem;
+}
+@media (min-width: 640px) {
+  .custom-questionButtonSize {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
