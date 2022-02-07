@@ -1,24 +1,23 @@
 export default class LoadingScreen extends HTMLElement {
-  #screen;
   constructor() {
     super();
-    this.#screen = document.createElement("div");
-    // this.#screen.className = "fixed w-screen h-screen z-50 bg-white opacity-1";
-    this.#screen.classList.add(
-      "duration-500",
+
+    this.classList.add(
       "fixed",
       "top-0",
       "left-0",
       "w-screen",
       "h-screen",
       "z-50",
-      "bg-red-200"
+      "bg-red-400"
     );
-    this.append(this.#screen);
+
+    window.addEventListener("load", () => this.#hide());
   }
 
-  hide() {
-    this.#screen.classList.add("opacity-0");
+  #hide() {
+    this.classList.add("duration-500");
+    this.classList.add("opacity-0");
     this.classList.add("invisible");
   }
 }

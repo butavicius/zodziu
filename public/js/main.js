@@ -43,10 +43,6 @@ window.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("keydown", (e) => board.handleKeyPress(e.key));
 });
 
-window.addEventListener("load", () => {
-  document.querySelector("loading-screen").hide();
-});
-
 // function handleLetter(letter) {
 //   board.write(letter);
 // }

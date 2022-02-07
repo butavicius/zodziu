@@ -54,7 +54,7 @@ export default class Board {
     }
 
     // Save game state
-    Storage.saveGame(this.#targetWord, this.#getBoardState());
+    Storage.saveGame(this.#targetWord, this.#boardState);
 
     // Color squares
     this.#changeSquareColors(
@@ -116,7 +116,7 @@ export default class Board {
     // Fill in letters
     state.forEach((wordArray, row) => {
       wordArray.forEach((letter, column) => {
-        this.#getSquare(row, column).innerText = letter;
+        this.#squares[(row, column)].innerText = letter;
       });
     });
 
@@ -127,7 +127,6 @@ export default class Board {
 
     // Load state
     this.#boardState = state;
-
     this.#submit();
   }
 
@@ -146,7 +145,7 @@ export default class Board {
         targetWordArray[column] = null;
 
         setTimeout(
-          () => this.#getSquare(row, column).markGreen(),
+          () => this.#squares[row][column].markGreen(),
           column * coloringSpeed
         );
       }
@@ -159,7 +158,7 @@ export default class Board {
       // Letter is wrong
       if (!targetWordArray.includes(letter)) {
         setTimeout(
-          () => this.#getSquare(row, column).markGray(),
+          () => this.#squares[row][column].markGray(),
           column * coloringSpeed
         );
 
@@ -175,7 +174,7 @@ export default class Board {
       targetWordArray[targetWordArray.indexOf(letter)] = null;
 
       setTimeout(
-        () => this.#getSquare(row, column).markYellow(),
+        () => this.#squares[row][column].markYellow(),
         column * coloringSpeed
       );
     });
@@ -197,10 +196,6 @@ export default class Board {
     this.#boardState.push([]);
   }
 
-  #getSquare(row, column) {
-    return this.#squares[row][column];
-  }
-
   #getCurrentSquare() {
     return this.#squares[this.#getCurrentRow()][this.#getCurrentColumn()];
   }
@@ -211,10 +206,6 @@ export default class Board {
 
   #getCurrentColumn() {
     return this.#getCurrentWordArray().length;
-  }
-
-  #getBoardState() {
-    return this.#boardState;
   }
 
   #letterIsLegal(letter) {
