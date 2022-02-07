@@ -1,12 +1,12 @@
+import LoadingScreen from "./components/LoadingScreen.js";
 import Board from "./Board.js";
 import TouchPad from "./TouchPad.js";
 import InfoCard from "./InfoCard.js";
-
 import { getTodaysGameNumber, codec } from "./utils.js";
 import wordlist from "./wordlist.js";
+import Logo from "./Logo.js";
 
 let board;
-const lettersAllowed = "ąčęėįšųūžertyuiopasdfghjklzcvbnm";
 const gameNumber = getTodaysGameNumber();
 const targetWord = codec.decode(wordlist[gameNumber]);
 
@@ -15,14 +15,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const touchPadKeys = document.querySelectorAll("touch-pad");
   const questionButton = document.querySelector("#question-button");
   const questionCloseButton = document.querySelector("#question-close-button");
-
-  // Register event listeners for all touch-pad keys
-  for (let key of touchPadKeys) {
-    key.addEventListener("click", (e) => handleKeyPress(e.target.key));
-  }
-
-  // Register physical keyboard listener
-  window.addEventListener("keydown", (e) => handleKeyPress(e.key));
 
   // Question button
   questionButton.addEventListener("click", () => {
@@ -40,50 +32,50 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 
   // TODO: Dispatch handleKey event instead of injecting handler
-  board = new Board(targetWord, boardRoot, lettersAllowed, handleHideKey);
+  board = new Board(targetWord, boardRoot, handleHideKey);
+
+  // Register event listeners for all touch-pad keys
+  for (let key of touchPadKeys) {
+    key.addEventListener("click", (e) => board.handleKeyPress(e.target.key));
+  }
+
+  // Register physical keyboard listener
+  window.addEventListener("keydown", (e) => board.handleKeyPress(e.key));
 });
 
-function handleLetter(letter) {
-  try {
-    board.write(letter);
-  } catch (error) {
-    console.error(error);
-  }
-}
+window.addEventListener("load", () => {
+  document.querySelector("loading-screen").hide();
+});
 
-function handleDelete() {
-  try {
-    board.delete();
-  } catch (error) {
-    console.error(error);
-  }
-}
+// function handleLetter(letter) {
+//   board.write(letter);
+// }
 
-function handleEnter() {
-  try {
-    board.submit();
-  } catch (error) {
-    console.error(error);
-  }
-}
+// function handleDelete() {
+//   board.delete();
+// }
 
-function handleKeyPress(key) {
-  if (board.gameIsOver()) {
-    return;
-  }
+// function handleEnter() {
+//   board.submit();
+// }
 
-  if (key === "Enter") {
-    handleEnter();
-    return;
-  }
+// function handleKeyPress(key) {
+//   if (board.gameIsOver()) {
+//     return;
+//   }
 
-  if (key === "Delete" || key === "Backspace") {
-    handleDelete();
-    return;
-  }
+//   if (key === "Enter") {
+//     handleEnter();
+//     return;
+//   }
 
-  if (lettersAllowed.includes(key)) handleLetter(key.toLowerCase());
-}
+//   if (key === "Delete" || key === "Backspace") {
+//     handleDelete();
+//     return;
+//   }
+
+//   if (lettersAllowed.includes(key)) handleLetter(key.toLowerCase());
+// }
 
 function handleHideKey(key) {
   const keyElement = document.querySelector(
@@ -93,10 +85,9 @@ function handleHideKey(key) {
 }
 
 function handleGameEnd(targetWord, boardState) {
-  
   // debug only
   // setTimeout(hideInfoCard, 2000);
-  
+
   // Create infocard
   new InfoCard(boardState, targetWord, gameNumber);
   showInfoCard();
@@ -122,7 +113,7 @@ function showAboutPage() {
   showOverlay();
 
   document.querySelector("#about-page-container").classList.remove("invisible");
-  document.querySelector("#about-page").classList.remove("-translate-y-64");
+  document.querySelector("#about-page").classList.remove("-translate-y-96");
   document.querySelector("#about-page").classList.remove("opacity-0");
   document.querySelector("#about-page").classList.add("opacity-1");
 }
@@ -130,7 +121,7 @@ function showAboutPage() {
 function hideAboutPage() {
   hideOverlay();
   document.querySelector("#about-page-container").classList.add("invisible");
-  document.querySelector("#about-page").classList.add("-translate-y-64");
+  document.querySelector("#about-page").classList.add("-translate-y-96");
   document.querySelector("#about-page").classList.add("opacity-0");
   document.querySelector("#about-page").classList.remove("opacity-1");
 }

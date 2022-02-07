@@ -4,26 +4,24 @@
 
 /* COLOR THEME */
 :root {
-  --logoBright: #5b7b59;
-  --logoDark: #d6a427;
-  --logoUnderline: #e4bc59;
-
-  --borderNormal: silver;
-  --borderActive: black;
-
-  --textNormal: #5c5957;
-  --textBright: #fbfbfb;
-
   --squareGreen: #85b282;
   --squareYellow: #e4bc59;
   --squareGray: #a7a4a2;
 
+  --textNormal: #5c5957;
+  --textBright: #fbfbfb;
+
+  --logoBright: var(--squareYellow);
+  --logoDark: var(--squareGray);
+  --logoUnderline: var(--squareYellow);
+
+  --borderNormal: var(--squareGray);
+  --borderActive: var(--textNormal);
+
   --touchpadKeys: #dddee2;
-  --touchpadLetters: black;
+  --touchpadLetters: var(--textNormal);
 
-  --textInfoBlock: #555;
-
-  --socialBorder: #e4bc59;
+  --socialBorder: var(--squareYellow);
 }
 
 /* Custom utility classes */
@@ -78,15 +76,8 @@
   flex: 1.8;
 }
 
-.custom-boardSize {
-  width: 256px;
-  height: 308px;
-}
-@media (min-width: 640px) {
-  .custom-boardSize {
-    width: 296px;
-    height: 356px;
-  }
+.custom-iconFill {
+  fill: red;
 }
 
 .custom-headerSize {
@@ -99,12 +90,12 @@
 }
 
 .custom-questionButtonSize {
-  height: 2rem;
-  width: 2rem;
+  height: 1.75rem;
+  width: 1.75rem;
 }
 @media (min-width: 640px) {
   .custom-questionButtonSize {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2rem;
+    height: 2rem;
   }
 }

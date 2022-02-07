@@ -6,13 +6,12 @@ export default class Board {
   #squares = [[], [], [], [], [], []];
   #targetWord;
   #gameIsOver = false;
-  #lettersAllowed;
   #hideKeyCallback;
   #rootElement;
+  #lettersAllowed = "ąčęėįšųūžertyuiopasdfghjklzcvbnm";
 
-  constructor(targetWord, rootElement, lettersAllowed, hideKeyCallback) {
+  constructor(targetWord, rootElement, hideKeyCallback) {
     this.#targetWord = targetWord;
-    this.#lettersAllowed = lettersAllowed;
     this.#hideKeyCallback = hideKeyCallback;
     this.#rootElement = rootElement;
 
@@ -33,92 +32,85 @@ export default class Board {
     if (savedGame) this.#loadState(savedGame);
   }
 
-  submit() {
+  handleKeyPress(key) {
+    if (this.#gameIsOver)
+      return console.log("Can't handle key press: game is over.");
+
+    if (key.toLowerCase() === "enter") return this.#submit();
+
+    if (key.toLowerCase() === "delete" || key.toLowerCase() === "backspace")
+      return this.#delete();
+
+    if (this.#lettersAllowed.includes(key.toLowerCase()))
+      return this.#write(key.toLowerCase());
+  }
+
+  #submit() {
     if (this.#gameIsOver) {
-      console.error("Board can't sumit word because game is over.");
-      return;
+      return console.log("Can't sumit word: game is over.");
     }
-    if (!this.wordIsFull()) {
-      console.error("Board can't submit word. It's not 5 letters long.");
-      return;
+    if (!this.#wordIsFull()) {
+      return console.log("Can't submit word: word length < 5.");
     }
 
     // Save game state
-    Storage.saveGame(this.#getTargetWord(), this.#getBoardState());
+    Storage.saveGame(this.#targetWord, this.#getBoardState());
 
     // Color squares
     this.#changeSquareColors(
-      this.#getTargetWord(),
+      this.#targetWord,
       this.#getCurrentWord(),
       this.#getCurrentRow()
     );
 
-    // If this is our last word, finish game
-    if (this.#getNumberOfGuessedWords() === 5) {
-      this.#endGame();
-    }
-
-    // If we guessed all the letters, finish game
-    if (this.#getTargetWord() === this.#getCurrentWord()) {
-      this.#endGame();
-      return;
-    }
+    // If we guessed word or it was last word, finish game
+    if (
+      this.#getNumberOfGuessedWords() === 5 ||
+      this.#targetWord === this.#getCurrentWord()
+    )
+      return this.#endGame();
 
     this.#startNewWord();
   }
 
-  write(letter) {
-    if (this.#gameIsOver) {
-      throw new Error("Board can't write letter because game is over.");
-    }
-    if (this.wordIsFull()) {
-      throw new Error(
-        "Board can't write, because current word already has 5 letters."
-      );
-    }
-    if (!this.#letterIsLegal(letter)) {
-      throw new Error(
-        `OOPS !Can't write letter to board. Letter is illegal: ${letter}`
-      );
-    }
+  #write(letter) {
+    if (this.#gameIsOver)
+      return console.log("Can't write letter: game is over.");
+
+    if (this.#wordIsFull())
+      return console.log("Can't write letter: word length 5.");
+
+    if (!this.#letterIsLegal(letter))
+      return console.log(`Can't write letter. Letter is illegal: ${letter}`);
 
     this.#getCurrentSquare().insertLetter(letter);
     this.#getCurrentWordArray().push(letter);
   }
 
-  delete() {
+  #delete() {
     if (this.#gameIsOver) {
-      throw new Error("Board can't delete letter because game is over.");
+      console.log("Can't delete letter: game is over.");
     }
 
-    if (this.wordIsEmpty()) {
-      throw new Error(
-        "Board can't delete letter because current word has 0 letters."
-      );
+    if (this.#wordIsEmpty()) {
+      console.log("Can't delete letter: word length 0.");
     }
 
     this.#getCurrentWordArray().pop();
     this.#getCurrentSquare().deleteLetter();
   }
 
-  wordIsFull() {
+  #wordIsFull() {
     return this.#getCurrentWordArray().length === 5;
   }
 
-  wordIsEmpty() {
+  #wordIsEmpty() {
     return this.#getCurrentWordArray().length === 0;
   }
 
-  gameIsOver() {
-    return this.#gameIsOver;
-  }
-
-  // PRIVATE METHODS
-
   #loadState(state) {
     if (!this.#stateLooksValid(state)) {
-      console.error("Board can't load state. State object is invalid");
-      return;
+      return console.error("Can't game history. State object is invalid.");
     }
 
     // Fill in letters
@@ -130,13 +122,13 @@ export default class Board {
 
     // Color squares
     state.forEach((wordArray, row) => {
-      this.#changeSquareColors(this.#getTargetWord(), wordArray, row);
+      this.#changeSquareColors(this.#targetWord, wordArray, row);
     });
 
     // Load state
     this.#boardState = state;
 
-    this.submit();
+    this.#submit();
   }
 
   #changeSquareColors(targetWord, guessedWord, row) {
@@ -172,7 +164,7 @@ export default class Board {
         );
 
         // Even if letter is marked gray, it may still exist in same word as green.
-        if (this.#getTargetWord().includes(letter)) return;
+        if (this.#targetWord.includes(letter)) return;
 
         // Otherwise it won't be needed no more. We can hide it from touchpad.
         this.#hideKeyCallback(letter);
@@ -199,10 +191,6 @@ export default class Board {
 
   #getCurrentWord() {
     return this.#getCurrentWordArray().join("");
-  }
-
-  #getTargetWord() {
-    return this.#targetWord;
   }
 
   #startNewWord() {
